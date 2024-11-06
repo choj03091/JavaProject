@@ -61,9 +61,9 @@
                 <tr>
                     <th>성별</th>
                     <td>
-                        <select name="dogGender" th:value="${dto.dogGender}" class="form-control">
-                            <option value="수컷" th:selected="*{dogGender == '수컷'}">수컷</option>
-                            <option value="암컷" th:selected="*{dogGender == '암컷'}">암컷</option>
+                        <select name="dogGender" class="form-control">
+                            <option value="수컷" th:selected="${dto.dogGender == '수컷'}">수컷</option>
+                            <option value="암컷" th:selected="${dto.dogGender == '암컷'}">암컷</option>
                         </select>
                         <span th:if="${#fields.hasErrors('dogGender')}" th:errors="*{dogGender}"></span>
                     </td>
@@ -71,9 +71,9 @@
                 <tr>
                     <th>약물 복용 여부</th>
                     <td>
-                        <select name="dogDrug" th:value="${dto.dogDrug}" class="form-control">
-                            <option value="유" th:selected="*{dogDrug == '유'}">유</option>
-                            <option value="무" th:selected="*{dogDrug == '무'}">무</option>
+                        <select name="dogDrug" class="form-control">
+                            <option value="유" th:selected="${dto.dogDrug == '유'}">유</option>
+                            <option value="무" th:selected="${dto.dogDrug == '무'}">무</option>
                         </select>
                         <span th:if="${#fields.hasErrors('dogDrug')}" th:errors="*{dogDrug}"></span>
                     </td>
@@ -81,15 +81,15 @@
                 <tr>
                     <th>혈액형</th>
                     <td>
-                        <select name="dogBlood" th:value="${dto.dogBlood}" class="form-control">
-                            <option value="DEA1" th:selected="*{dogBlood == 'DEA1'}">DEA1</option>
-                            <option value="DEA1.1" th:selected="*{dogBlood == 'DEA1.1'}">DEA1.1</option>
-                            <option value="DEA1.2" th:selected="*{dogBlood == 'DEA1.2'}">DEA1.2</option>
-                            <option value="DEA3" th:selected="*{dogBlood == 'DEA3'}">DEA3</option>
-                            <option value="DEA4" th:selected="*{dogBlood == 'DEA4'}">DEA4</option>
-                            <option value="DEA5" th:selected="*{dogBlood == 'DEA5'}">DEA5</option>
-                            <option value="DEA7" th:selected="*{dogBlood == 'DEA7'}">DEA7</option>
-                            <option value="DEA8" th:selected="*{dogBlood == 'DEA8'}">DEA8</option>
+                        <select name="dogBlood" class="form-control">
+                            <option value="DEA1" th:selected="${dto.dogBlood == 'DEA1'}">DEA1</option>
+                            <option value="DEA1.1" th:selected="${dto.dogBlood == 'DEA1.1'}">DEA1.1</option>
+                            <option value="DEA1.2" th:selected="${dto.dogBlood == 'DEA1.2'}">DEA1.2</option>
+                            <option value="DEA3" th:selected="${dto.dogBlood == 'DEA3'}">DEA3</option>
+                            <option value="DEA4" th:selected="${dto.dogBlood == 'DEA4'}">DEA4</option>
+                            <option value="DEA5" th:selected="${dto.dogBlood == 'DEA5'}">DEA5</option>
+                            <option value="DEA7" th:selected="${dto.dogBlood == 'DEA7'}">DEA7</option>
+                            <option value="DEA8" th:selected="${dto.dogBlood == 'DEA8'}">DEA8</option>
                         </select>
                         <span th:if="${#fields.hasErrors('dogBlood')}" th:errors="*{dogBlood}"></span>
                     </td>

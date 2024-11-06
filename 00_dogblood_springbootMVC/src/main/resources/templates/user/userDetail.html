@@ -44,12 +44,10 @@
 					</tr>
 					<tr>
 						<th>역할</th>
-						<td>
-						<select name="role" th:value="${dto.role}" class="form-control">
-                            <option value="USER" th:selected="*{role == 'USER'}">USER</option>
-                            <option value="ADMIN" th:selected="*{role == 'ADMIN'}">ADMIN</option>
-						</select>
-						<span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+						<td><select name="role" class="form-control">
+								<option value="USER" th:selected="${dto.role == 'USER'}">USER</option>
+								<option value="ADMIN" th:selected="${dto.role == 'ADMIN'}">ADMIN</option>
+						</select> <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
 						</td>
 					</tr>
 					<tr>
