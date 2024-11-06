@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>반려견 목록</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">반려견 목록</h2>
+						<p th:text="'현재 세션 mdto: ' + ${session.mdto}"></p>
+			
+
+			<form action="/dog/mulDel" method="post">
+				<table class="table">
+					<thead>
+						<tr>
+							<th><input type="checkbox" name="all"
+								onclick="allSel(this.checked)" /></th>
+							<th>회원 ID</th>
+							<th>회원 이름</th>
+							<th>반려견 이름</th>
+							<th>품종</th>
+							<th>나이</th>
+							<th>성별</th>
+							<th>혈액형</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${#lists.isEmpty(dogList)}">
+							<td colspan="8" style="text-align: center;">--- 등록된 반려견이
+								없습니다 ---</td>
+						</tr>
+						<tr th:each="dog : ${dogList}">
+							<td><input type="checkbox" name="dogId"
+								th:value="${dog.dogId}" /></td>
+							<td th:text="${dog.memberUsername}">회원 ID</td>
+							<td th:text="${dog.memberName}">회원 이름</td>
+							<td><a th:href="@{/dog/dogDetail(dogId=${dog.dogId})}"
+								th:text="${dog.dogName}"></a></td>
+							<td th:text="${dog.dogBreed}">품종</td>
+							<td th:text="${dog.dogAge}">나이</td>
+							<td th:text="${dog.dogGender}">성별</td>
+							<td th:text="${dog.dogBlood}">혈액형</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="text-right">
+					<button type="button" class="btn btn-secondary"
+						onclick="location.href='/dog/dogInsert'">반려견 추가</button>
+					<button type="submit" class="btn btn-danger"
+						onclick="return isCheck();">삭제</button>
+				</div>
+			</form>
+		</div>
+
+		<script type="text/javascript">
+        function allSel(bool) {
+            var chks = document.getElementsByName("dogId");
+            for (var i = 0; i < chks.length; i++) {
+                chks[i].checked = bool;
+            }
+        }
+
+        function isCheck() {
+            return confirm("정말 삭제하시겠습니까?");
+        }
+    </script>
+	</div>
+</body>
+</html>

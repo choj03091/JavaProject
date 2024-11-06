@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cjt.board.mapper.MemberMapper">
+
+	<!-- 사용자 추가 -->
+	<insert id="addUser"
+		parameterType="com.cjt.board.dtos.MemberDto">
+		INSERT INTO member (id, password, name, address, email,
+		role, regDate)
+		VALUES (#{id}, #{password}, #{name}, #{address}, #{email},
+		#{role}, NOW())
+	</insert>
+
+	<!-- ID 중복 체크 -->
+	<select id="idChk" resultType="String" parameterType="String">
+		SELECT id
+		FROM member WHERE id = #{id}
+	</select>
+
+	<!-- 로그인 시 사용자 정보 조회 -->
+	<select id="loginUser" resultType="com.cjt.board.dtos.MemberDto"
+		parameterType="String">
+		SELECT * FROM member WHERE id = #{id}
+	</select>
+
+	<!-- ID를 통해 사용자 정보 조회 -->
+	<select id="findMemberById" parameterType="String"
+		resultType="com.cjt.board.dtos.MemberDto">
+		SELECT * FROM member WHERE id = #{id}
+	</select>
+
+	<select id="getAllUserList" resultType="memberDto">
+		SELECT memberId, id,
+		name, regDate
+		FROM member
+		WHERE delFlag = 'N'
+	</select>
+
+	<select id="getUser" parameterType="int" resultType="memberDto">
+		SELECT
+		memberId, id, name, address, email, role, DELFLAG, regDate
+		FROM member
+		WHERE memberId = #{memberId}
+	</select>
+
+	<update id="updateUser" parameterType="memberDto">
+		UPDATE member
+		SET 
+		address = #{address},
+		email = #{email},
+		role = #{role},
+		DELFLAG = #{delFlag}
+		WHERE memberId = #{memberId}
+	</update>
+	
+	<insert id="insertUser" parameterType="memberDto">
+		INSERT INTO member (id, password, name, address, email, role, DELFLAG, regDate)
+		VALUES (#{id}, #{password}, #{name}, #{address}, #{email}, #{role},
+		#{delFlag}, NOW())
+	</insert>
+
+
+</mapper>

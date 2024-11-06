@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>게시판 상세보기</title>
+<link rel="stylesheet" th:href="@{/css/layout.css}" />
+<script type="text/javascript">
+	function updateEX() {
+		return confirm("수정하시겠습니까?");
+	}
+</script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">게시판 상세보기</h2>
+			<p th:text="'현재 세션 mdto: ' + ${session.mdto}"></p>
+
+			<form action="/board/boardUpdate" method="post"
+				onsubmit="return updateEX()" th:object="${updateBoardCommand}">
+				<input type="hidden" name="board_seq" th:value="${dto.board_seq}" />
+				<table class="table">
+					<tr>
+						<th>작성자[ID]</th>
+						<td th:text="${dto.id}"></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><span th:text="${dto.title}"
+							th:if="${session.mdto == null or session.mdto.id != dto.id}"></span>
+							<input type="text" th:field="*{title}" class="form-control"
+							th:if="${session.mdto != null and session.mdto.id == dto.id}"
+							th:value="${dto.title}" /> <span
+							th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+					<tr>
+						<th>파일</th>
+						<td th:if="${#lists.isEmpty(dto.fileBoardDto)}">첨부파일없음</td>
+						<td th:unless="${#lists.isEmpty(dto.fileBoardDto)}"><th:block
+								th:each="fdto : ${dto.fileBoardDto}">
+								<span class="glyphicon glyphicon-folder-open"></span>
+								<a th:text="${fdto.origin_filename}"
+									th:href="@{/board/download(file_seq=${fdto.file_seq})}"></a>&nbsp;&nbsp;
+                            </th:block></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><span th:text="${dto.content}"
+							th:if="${session.mdto == null or session.mdto.id != dto.id}"></span>
+							<textarea rows="10" cols="60" th:field="*{content}"
+								class="form-control"
+								th:if="${session.mdto != null and session.mdto.id == dto.id}">${dto.content}</textarea>
+							<span th:if="${#fields.hasErrors('content')}"
+							th:errors="*{content}" class="errorField"></span></td>
+					</tr>
+					<td colspan="2"><th:block
+							th:if="${session.mdto != null and session.mdto.id == dto.id}">
+							<button type="submit" class="btn">수정</button>
+							<button type="button" class="btn"
+								th:onclick="|location.href='@{/board/mulDel(seq=${dto.board_seq})}'|">삭제</button>
+						</th:block>
+						<button type="button" class="btn"
+							th:onclick="|location.href='@{/board/boardList}'|">목록</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

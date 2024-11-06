@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 목록</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container mt-5">
+            <h2 class="mb-4">사용자 목록</h2>
+
+            <form action="/user/mulDel" method="post">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="all" onclick="allSel(this.checked)" /></th>
+                            <th>회원 ID</th>
+                            <th>회원 이름</th>
+                            <th>가입일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(list)}">
+                            <td colspan="4" style="text-align: center;">--- 등록된 사용자가 없습니다 ---</td>
+                        </tr>
+                        <tr th:each="dto : ${list}">
+                            <td><input type="checkbox" name="userId" th:value="${dto.memberId}" /></td>
+                            <td th:text="${dto.id}">회원 ID</td>
+							<td><a th:href="@{/user/userDetail(memberId=${dto.memberId})}"
+								th:text="${dto.Name}"></a></td>
+                    		<td th:text="${#dates.format(dto.regDate, 'yyy-MM-dd')}">가입일</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/user/userInsert'">사용자 추가</button>
+                    <button type="submit" class="btn btn-danger" onclick="return isCheck();">삭제</button>
+                </div>
+            </form>
+        </div>
+
+        <script type="text/javascript">
+            function allSel(bool) {
+                var chks = document.getElementsByName("userId");
+                for (var i = 0; i < chks.length; i++) {
+                    chks[i].checked = bool;
+                }
+            }
+
+            function isCheck() {
+                return confirm("정말 삭제하시겠습니까?");
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>반려견 추가</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div id="container">
+        <h1>반려견 추가하기</h1>
+        <form action="/dog/dogInsert" method="post" th:object="${insertDogCommand}">
+            <!-- memberId를 숨겨진 필드로 추가 -->
+            <input type="hidden" th:field="*{memberId}" />
+            
+            <table class="table">
+                <tr>
+                    <th>반려견 이름</th>
+                    <td>
+                        <input type="text" name="dogName" th:field="*{dogName}" class="form-control" />
+                        <span th:if="${#fields.hasErrors('dogName')}" th:errors="*{dogName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>품종</th>
+                    <td>
+                        <input type="text" name="dogBreed" th:field="*{dogBreed}" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>나이</th>
+                    <td>
+                        <input type="number" name="dogAge" th:field="*{dogAge}" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>몸무게 (kg)</th>
+                    <td>
+                        <input type="number" step="0.1" name="dogWeight" th:field="*{dogWeight}" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>성별</th>
+                    <td>
+                        <select name="dogGender" th:field="*{dogGender}" class="form-control">
+                            <option value="수컷">수컷</option>
+                            <option value="암컷">암컷</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>약물 복용 여부</th>
+                    <td>
+                        <select name="dogDrug" th:field="*{dogDrug}" class="form-control">
+                            <option value="유">유</option>
+                            <option value="무">무</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>혈액형</th>
+                    <td>
+                        <select name="dogBlood" th:field="*{dogBlood}" class="form-control">
+                            <option value="DEA1">DEA1</option>
+                            <option value="DEA1.1">DEA1.1</option>
+                            <option value="DEA1.2">DEA1.2</option>
+                            <option value="DEA3">DEA3</option>
+                            <option value="DEA4">DEA4</option>
+                            <option value="DEA5">DEA5</option>
+                            <option value="DEA7">DEA7</option>
+                            <option value="DEA8">DEA8</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn">등록</button>
+                        <button type="button" class="btn" th:onclick="|location.href='@{/dog/list}'|">목록</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

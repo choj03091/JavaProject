@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+        $(function(){
+            $("input[name=id]").on("keyup", function(){
+                var id = $(this).val();
+                $.ajax({
+                    url: "/user/idChk",
+                    method: "get",
+                    dataType: "json",
+                    data: {"id": id},
+                    success: function(data){
+                        if(data.id != null){ // 사용할 수 없는 id
+                            $("#idChk").attr("class", "n")
+                                       .css("color", "red")
+                                       .text("사용할 수 없는 아이디입니다.");
+                        } else { // 사용 가능한 id
+                            $("#idChk").attr("class", "y")
+                                       .css("color", "green")
+                                       .text("사용 가능한 아이디입니다.");
+                        }
+                    },
+                    error: function(e){
+                        alert("통신 오류: " + e);
+                    }
+                });
+            });
+        });
+
+        function submitChk() {
+            var classValue = $("#idChk").attr("class");
+            if(classValue == "n"){
+                alert("아이디를 확인하세요");
+                return false;
+            }
+            return true;
+        }
+    </script>
+<style type="text/css">
+/* 추가적인 스타일을 여기에 작성할 수 있습니다. */
+</style>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div id="container">
+			<h1>회원 가입</h1>
+			<form onsubmit="return submitChk()" action="/user/userInsert"
+				method="post" th:object="${insertUserCommand}">
+				<table class="table">
+					<tr>
+						<th>아이디:</th>
+						<td><input th:field="*{id}" type="text" class="form-control"
+							name="id" /> <span id="idChk" class="n"></span> <span
+							th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+						<th>이름:</th>
+						<td><input th:field="*{name}" type="text"
+							class="form-control" name="name" /> <span
+							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+						<th>비밀번호:</th>
+						<td><input th:field="*{password}" type="password"
+							class="form-control" name="password" /> <span
+							th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+						<th>이메일:</th>
+						<td><input th:field="*{email}" type="email"
+							class="form-control" name="email" /> <span
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+						<th>주소:</th>
+						<td><input th:field="*{address}" type="text"
+							class="form-control" name="address" /> <span
+							th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+						<th>역할</th>
+						<td><select name="role" th:field="*{role}"
+							class="form-control">
+								<option value="USER">USER</option>
+								<option value="ADMIN">ADMIN</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="가입"
+							class="btn btn-primary" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
