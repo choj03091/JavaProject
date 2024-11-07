@@ -27,7 +27,9 @@
                         <tr th:each="dto : ${list}">
                             <td><input type="checkbox" name="memberIds" th:value="${dto.memberId}" /></td>
                             <td th:text="${dto.id}">회원 ID</td>
-                            <td th:text="${dto.name}">회원 이름</td>
+                            <td>
+                                <a th:href="@{/user/userDetail(memberId=${dto.memberId})}" th:text="${dto.name}"></a>
+                            </td>
                             <td th:text="${#dates.format(dto.regDate, 'yyy-MM-dd')}">가입일</td>
                         </tr>
                     </tbody>

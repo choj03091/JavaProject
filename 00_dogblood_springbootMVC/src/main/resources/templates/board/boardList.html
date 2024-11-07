@@ -17,8 +17,6 @@
 		return confirm("정말 삭제하시겠습니까?");
 	}
 </script>
-<style type="text/css">
-</style>
 </head>
 <body>
 <div layout:fragment="content">
@@ -29,7 +27,7 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>
+						<th th:if="${session.mdto != null and session.mdto.role != 'USER'}">
 							<input type="checkbox" name="all" onclick="allSel(this.checked)" />
 						</th>
 						<th>작성자[ID]</th>
@@ -44,7 +42,7 @@
 						<td colspan="6" style="text-align: center;">--- 등록된 게시물이 없습니다 ---</td>
 					</tr>
 					<tr th:each="board : ${list}">
-						<td>
+						<td th:if="${session.mdto != null and session.mdto.role != 'USER'}">
 							<input type="checkbox" name="boardId" th:value="${board.boardId}" />
 						</td>
 						<td th:text="${board.memberUsername}">작성자[ID]</td>
@@ -56,8 +54,8 @@
 				</tbody>
 			</table>
 			<div class="text-right">
-				<button type="button" class="btn btn-secondary" onclick="location.href='/board/boardInsert'">글쓰기</button>
-				<button type="submit" class="btn btn-danger" onclick="return isCheck();">삭제</button>
+				<button type="button" class="btn btn-secondary" onclick="location.href='/board/boardInsert'" th:if="${session.mdto != null}">글쓰기</button>
+				<button type="submit" class="btn btn-danger" onclick="return isCheck();" th:if="${session.mdto != null and session.mdto.role != 'USER'}">삭제</button>
 			</div>
 		</form>
 	</div>
