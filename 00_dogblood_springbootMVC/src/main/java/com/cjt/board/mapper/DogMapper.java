@@ -15,4 +15,5 @@ public interface DogMapper {
     public DogDto getDog(int dogId);
     public boolean updateDog(DogDto dto);
     public void deleteByMemberId(int memberId);
+    public void deleteByDogId(int dogId);
 }

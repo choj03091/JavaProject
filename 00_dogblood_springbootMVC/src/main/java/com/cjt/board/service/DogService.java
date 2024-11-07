@@ -56,6 +56,12 @@ public class DogService {
 
         return dogMapper.updateDog(dto);
     }
+    
+    public void mulDel(List<Integer> dogIds) {
+    	for(Integer dogId : dogIds) {
+    		dogMapper.deleteByDogId(dogId);
+    	}
+    }
    
 
 }

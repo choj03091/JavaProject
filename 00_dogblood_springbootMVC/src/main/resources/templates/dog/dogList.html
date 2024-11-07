@@ -34,7 +34,7 @@
 								없습니다 ---</td>
 						</tr>
 						<tr th:each="dog : ${dogList}">
-							<td><input type="checkbox" name="dogId"
+							<td><input type="checkbox" name="dogIds"
 								th:value="${dog.dogId}" /></td>
 							<td th:text="${dog.memberUsername}">회원 ID</td>
 							<td th:text="${dog.memberName}">회원 이름</td>
@@ -59,7 +59,7 @@
 
 		<script type="text/javascript">
         function allSel(bool) {
-            var chks = document.getElementsByName("dogId");
+            var chks = document.getElementsByName("dogIds");
             for (var i = 0; i < chks.length; i++) {
                 chks[i].checked = bool;
             }

@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.cjt.board.command.InsertDogCommand;
@@ -113,5 +114,19 @@ public class DogController {
         
         // 수정을 완료한 후 dogList로 리다이렉트
         return "redirect:/dog/dogList";
+    }
+    
+    @PostMapping("/mulDel")
+    public String mulDel(@RequestParam("dogIds")List<Integer> dogIds, Model model) {
+    	if(dogIds == null || dogIds.isEmpty()) {
+    		model.addAttribute("errorMessage", "삭제할 반려견을 선택하지 않았습니다.");
+    		return "dog/dogList";
+    	}
+    	
+    	dogService.mulDel(dogIds);
+    	
+    	System.out.println("삭제된 반려견 ID 목록:" + dogIds);
+    	
+    	return "redirect:/dog/dogList";
     }
 }
