@@ -3,13 +3,13 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cjt.board.mapper.MemberMapper">
-
 	<!-- 사용자 추가 -->
 	<insert id="addUser"
 		parameterType="com.cjt.board.dtos.MemberDto">
 		INSERT INTO member (id, password, name, address, email,
 		role, regDate)
-		VALUES (#{id}, #{password}, #{name}, #{address}, #{email},
+		VALUES (#{id}, #{password}, #{name}, #{address},
+		#{email},
 		#{role}, NOW())
 	</insert>
 
@@ -47,19 +47,40 @@
 
 	<update id="updateUser" parameterType="memberDto">
 		UPDATE member
-		SET 
-		address = #{address},
+		SET
+		address =
+		#{address},
 		email = #{email},
 		role = #{role},
 		DELFLAG = #{delFlag}
-		WHERE memberId = #{memberId}
+		WHERE
+		memberId = #{memberId}
 	</update>
-	
+
 	<insert id="insertUser" parameterType="memberDto">
-		INSERT INTO member (id, password, name, address, email, role, DELFLAG, regDate)
-		VALUES (#{id}, #{password}, #{name}, #{address}, #{email}, #{role},
+		INSERT INTO member (id,
+		password, name, address, email, role, DELFLAG, regDate)
+		VALUES (#{id},
+		#{password}, #{name}, #{address}, #{email}, #{role},
 		#{delFlag}, NOW())
 	</insert>
 
+<!-- 사용자 삭제 -->
+    <delete id="mulDel" parameterType="list">
+        DELETE FROM member WHERE memberId IN
+        <foreach collection="memberIds" item="memberId" open="(" separator="," close=")">
+            #{memberId}
+        </foreach>
+    </delete>
+    
+    <!-- 사용자 ID로 관련된 게시물 삭제 -->
+    <delete id="deleteByMemberId" parameterType="int">
+        DELETE FROM board WHERE id = #{memberId}
+    </delete>
+    
+    <!-- 사용자 ID로 관련된 반려견 삭제 -->
+    <delete id="deleteByMemberIdInDog" parameterType="int">
+        DELETE FROM dog WHERE memberId = #{memberId}
+    </delete>
 
 </mapper>

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.cjt.board.command.AddUserCommand;
@@ -13,6 +14,8 @@ import com.cjt.board.command.InsertUserCommand;
 import com.cjt.board.command.LoginCommand;
 import com.cjt.board.command.UpdateUserCommand;
 import com.cjt.board.dtos.MemberDto;
+import com.cjt.board.mapper.BoardMapper;
+import com.cjt.board.mapper.DogMapper;
 import com.cjt.board.mapper.MemberMapper;
 import com.cjt.board.status.RoleStatus;
 
@@ -24,6 +27,13 @@ public class MemberService {
 
     @Autowired
     private MemberMapper memberMapper;
+    
+    @Autowired
+    private BoardMapper boardMapper;
+    
+    @Autowired
+    private DogMapper dogMapper;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -111,7 +121,21 @@ public class MemberService {
         dto.setRole(insertUserCommand.getRole());
         dto.setDelFlag(insertUserCommand.getDelFlag());
         memberMapper.insertUser(dto);
-    	
     }
+
+//    @Transactional
+//    public boolean mulDel(List<Integer> memberIds) {
+//        // 게시글 삭제
+//        for (Integer memberId : memberIds) {
+//            boardMapper.mulDel(memberId); // 각 memberId를 직접 전달
+//        }
+//        // 반려견 삭제
+//        for (Integer memberId : memberIds) {
+//            dogMapper.deleteByMemberId(memberId); // 반려견 삭제 메소드 호출
+//        }
+//        // 회원 삭제
+//        return memberMapper.mulDel(memberIds);
+//    }
+
 }
 

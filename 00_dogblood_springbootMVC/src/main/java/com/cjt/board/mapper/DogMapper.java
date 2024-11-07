@@ -1,6 +1,8 @@
 package com.cjt.board.mapper;
 
 import com.cjt.board.dtos.DogDto;
+
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,4 +14,6 @@ public interface DogMapper {
     public boolean insertDog(DogDto dto);
     public DogDto getDog(int dogId);
     public boolean updateDog(DogDto dto);
+//    @Delete("DELETE FROM dog WHERE memberId = #{memberId}")
+//    void deleteByMemberId(Integer memberId);
 }

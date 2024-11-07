@@ -10,7 +10,6 @@
     <div layout:fragment="content">
         <div class="container mt-5">
             <h2 class="mb-4">사용자 목록</h2>
-
             <form action="/user/mulDel" method="post">
                 <table class="table">
                     <thead>
@@ -26,15 +25,13 @@
                             <td colspan="4" style="text-align: center;">--- 등록된 사용자가 없습니다 ---</td>
                         </tr>
                         <tr th:each="dto : ${list}">
-                            <td><input type="checkbox" name="userId" th:value="${dto.memberId}" /></td>
+                            <td><input type="checkbox" name="memberIds" th:value="${dto.memberId}" /></td>
                             <td th:text="${dto.id}">회원 ID</td>
-							<td><a th:href="@{/user/userDetail(memberId=${dto.memberId})}"
-								th:text="${dto.Name}"></a></td>
-                    		<td th:text="${#dates.format(dto.regDate, 'yyy-MM-dd')}">가입일</td>
+                            <td th:text="${dto.name}">회원 이름</td>
+                            <td th:text="${#dates.format(dto.regDate, 'yyy-MM-dd')}">가입일</td>
                         </tr>
                     </tbody>
                 </table>
-
                 <div class="text-right">
                     <button type="button" class="btn btn-secondary" onclick="location.href='/user/userInsert'">사용자 추가</button>
                     <button type="submit" class="btn btn-danger" onclick="return isCheck();">삭제</button>
@@ -44,7 +41,7 @@
 
         <script type="text/javascript">
             function allSel(bool) {
-                var chks = document.getElementsByName("userId");
+                var chks = document.getElementsByName("memberIds");
                 for (var i = 0; i < chks.length; i++) {
                     chks[i].checked = bool;
                 }

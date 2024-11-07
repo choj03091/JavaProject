@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
@@ -179,5 +180,24 @@ public class MemberController {
 		
 		return "redirect:/user/userList";
 	}
+	
+//	@RequestMapping(value = "mulDel", method = {RequestMethod.POST, RequestMethod.GET})
+//	public String mulDel(@Validated DelUserCommand delUserCommand,
+//	                     BindingResult result,
+//	                     Model model) {
+//	    if (result.hasErrors()) {
+//	        System.out.println("최소 하나 체크하기.");
+//	        List<MemberDto> list = memberService.getAllUserList();
+//	        model.addAttribute("list", list);
+//	        return "user/userList";
+//	    }
+//	    memberService.mulDel(delUserCommand.getMemberIds()); // 리스트로 수정된 부분
+//	    System.out.println("사용자 삭제.");
+//	    return "redirect:/user/userList";
+//	}
+
+
+
+
 }
 

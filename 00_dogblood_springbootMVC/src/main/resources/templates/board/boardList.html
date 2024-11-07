@@ -7,7 +7,7 @@
 <title>게시판 목록</title>
 <script type="text/javascript">
 	function allSel(bool) {
-		var chks = document.getElementsByName("seq");
+		var chks = document.getElementsByName("boardId");
 		for (var i = 0; i < chks.length; i++) {
 			chks[i].checked = bool;
 		}
@@ -21,61 +21,46 @@
 </style>
 </head>
 <body>
-	a
-	<div layout:fragment="content">
-		<div class="container mt-5">
-			<h2 class="mb-4">게시판 목록</h2>
-			<p th:text="'현재 세션 mdto: ' + ${session.mdto}"></p>
-			<form action="/board/mulDel" method="post"
-				th:object="${delBoardCommand}">
-				<table class="table">
-					<thead>
-						<tr>
-							<th
-								th:if="${session.role != null and session.mdto.role != 'USER'}">
-								<input type="checkbox" name="all" onclick="allSel(this.checked)" />
-							</th>
-
-							<th>작성자[ID]</th>
-							<th>제목</th>
-							<th>내용</th>
-							<th>작성일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:if="${#lists.isEmpty(list)}">
-							<td colspan="5" style="text-align: center;">--- 등록된 게시물이
-								없습니다 ---</td>
-						</tr>
-						<tr th:each="board : ${list}">
-							<td
-								th:if="${session.role != null and session.mdto.role != 'USER'}">
-								<input type="checkbox" name="seq" th:value="${board.board_seq}" />
-							</td>
-							<td th:text="${board.id}">작성자[ID]</td>
-							<td><a
-								th:href="@{/board/boardDetail(board_seq=${board.board_seq})}"
-								th:text="${board.title}"></a></td>
-							<td th:text="${board.content}">내용</td>
-							<td th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}">작성일</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<span th:if="${#fields.hasErrors('seq')}" th:errors="*{seq}"></span>
-
-				<div class="text-right">
-					<!-- 로그인한 경우에만 버튼 표시 -->
-					<div th:if="${session.role != null}">
-						<button type="button" class="btn btn-secondary"
-							onclick="location.href='/board/boardInsert'">글쓰기</button>
-						<button type="submit" class="btn btn-danger"
-							th:if="${session.mdto.role != 'USER'}"
-							onclick="return isCheck();">삭제</button>
-					</div>
-				</div>
-			</form>
-		</div>
+<div layout:fragment="content">
+	<div class="container mt-5">
+		<h2 class="mb-4">게시판 목록</h2>
+		<p th:text="'현재 세션 mdto: ' + ${session.mdto}"></p>
+		<form action="/board/mulDel" method="post">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							<input type="checkbox" name="all" onclick="allSel(this.checked)" />
+						</th>
+						<th>작성자[ID]</th>
+						<th>작성자 이름</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(list)}">
+						<td colspan="6" style="text-align: center;">--- 등록된 게시물이 없습니다 ---</td>
+					</tr>
+					<tr th:each="board : ${list}">
+						<td>
+							<input type="checkbox" name="boardId" th:value="${board.boardId}" />
+						</td>
+						<td th:text="${board.memberUsername}">작성자[ID]</td>
+						<td th:text="${board.memberName}">회원 이름</td>
+						<td><a th:href="@{/board/boardDetail(boardId=${board.boardId})}" th:text="${board.title}"></a></td>
+						<td th:text="${board.content}">내용</td>
+						<td th:text="${#dates.format(board.regDate, 'yyyy-MM-dd')}">작성일</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="text-right">
+				<button type="button" class="btn btn-secondary" onclick="location.href='/board/boardInsert'">글쓰기</button>
+				<button type="submit" class="btn btn-danger" onclick="return isCheck();">삭제</button>
+			</div>
+		</form>
 	</div>
+</div>
 </body>
 </html>
