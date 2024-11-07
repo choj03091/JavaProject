@@ -21,31 +21,32 @@
 	</resultMap>
 
 
-<select id="getAllList" resultType="boardDto">
-    SELECT b.boardId, b.title, b.content, b.regDate, b.delFlag,
-           m.id AS memberUsername, m.name AS memberName
-    FROM board b
-    JOIN member m ON b.memberId = m.memberId
-    WHERE b.delFlag = 'N'
-    ORDER BY b.regDate DESC
-</select>
+	<select id="getAllList" resultType="boardDto">
+		SELECT b.boardId, b.title, b.content, b.regDate, b.delFlag,
+		m.id AS memberUsername, m.name AS memberName
+		FROM board b
+		JOIN member m ON b.memberId = m.memberId
+		WHERE b.delFlag = 'N'
+		ORDER BY b.regDate DESC
+	</select>
 
-<select id="getBoard" parameterType="int" resultType="boardDto">
-    SELECT b.boardId, b.memberId, b.title, b.content, b.regDate, b.delFlag,
-           m.id AS memberUsername, m.name AS memberName
-    FROM board b
-    JOIN member m ON b.memberId = m.memberId
-    WHERE b.boardId = #{boardId} AND b.delFlag = 'N'
-</select>
+	<select id="getBoard" parameterType="int" resultType="boardDto">
+		SELECT b.boardId, b.memberId, b.title, b.content, b.regDate, b.delFlag,
+		m.id AS memberUsername, m.name AS memberName
+		FROM board b
+		JOIN member m ON b.memberId = m.memberId
+		WHERE b.boardId = #{boardId} AND b.delFlag = 'N'
+	</select>
 
 	<!-- useGeneratedKeys="true" keyProperty="board_seq" : 증가된 board_seq값을 BoardDto에 
 		전달 : insertBoard(boardDto) -->
-		
+
 
 	<insert id="insertBoard" parameterType="boardDto">
-		INSERT INTO board 
+		INSERT INTO board
 		(memberId, title, content, regDate, delFlag)
-		VALUES (#{memberId}, #{title},
+		VALUES (#{memberId},
+		#{title},
 		#{content}, NOW(), 'N')
 	</insert>
 
@@ -56,13 +57,21 @@
 		WHERE boardId=#{boardId}
 	</update>
 
-<!--     <delete id="mulDel" parameterType="list">
-        DELETE FROM board 
-        WHERE boardId IN
-        <foreach collection="seqs" item="boardId" open="(" close=")" separator=",">
+	<delete id="deleteByMemberId" parameterType="int">
+		DELETE FROM board WHERE memberId = #{memberId}
+	</delete>
+
+	<delete id="deleteByBoardId" parameterType="int">
+		DELETE FROM board WHERE boardId = #{boardId}
+	</delete>
+
+    <!-- 여러 게시물 삭제 -->
+    <delete id="mulDel" parameterType="list">
+        DELETE FROM board WHERE boardId IN
+        <foreach collection="boardIds" item="boardId" open="(" separator="," close=")">
             #{boardId}
         </foreach>
-    </delete> -->
+    </delete>
 
 
 </mapper>

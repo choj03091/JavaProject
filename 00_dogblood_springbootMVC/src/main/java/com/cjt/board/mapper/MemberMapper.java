@@ -23,7 +23,6 @@ public interface MemberMapper {
     public MemberDto getUser(int memberId);
     public boolean updateUser(MemberDto dto);
     public boolean insertUser(MemberDto dto);
-    public boolean mulDel(List<Integer> memberIds); // 사용자 삭제
-    public void deleteByMemberId(int memberId); // 게시물 삭제
-    public void deleteByMemberIdInDog(int memberId); // 반려견 삭제
+    void deleteByMemberId(int memberId); // 특정 사용자의 삭제 메소드
+    void mulDel(List<Integer> memberIds); // 다수의 사용자 삭제 메소드
 }

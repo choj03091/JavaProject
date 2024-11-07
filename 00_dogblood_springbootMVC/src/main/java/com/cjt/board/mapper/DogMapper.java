@@ -14,6 +14,5 @@ public interface DogMapper {
     public boolean insertDog(DogDto dto);
     public DogDto getDog(int dogId);
     public boolean updateDog(DogDto dto);
-//    @Delete("DELETE FROM dog WHERE memberId = #{memberId}")
-//    void deleteByMemberId(Integer memberId);
+    public void deleteByMemberId(int memberId);
 }

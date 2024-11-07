@@ -92,6 +92,12 @@ public class BoardService {
 		return boardMapper.updateBoard(dto);
 	}
 
+    // 여러 게시물 삭제
+    public void mulDel(List<Integer> boardIds) {
+        for (Integer boardId : boardIds) {
+            boardMapper.deleteByBoardId(boardId); // 게시물 삭제
+        }
+    }
 
 }
 
@@ -100,3 +106,4 @@ public class BoardService {
 
 
 
+	

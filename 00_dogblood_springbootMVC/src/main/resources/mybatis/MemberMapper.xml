@@ -65,22 +65,17 @@
 		#{delFlag}, NOW())
 	</insert>
 
-<!-- 사용자 삭제 -->
-    <delete id="mulDel" parameterType="list">
-        DELETE FROM member WHERE memberId IN
-        <foreach collection="memberIds" item="memberId" open="(" separator="," close=")">
-            #{memberId}
-        </foreach>
-    </delete>
-    
-    <!-- 사용자 ID로 관련된 게시물 삭제 -->
-    <delete id="deleteByMemberId" parameterType="int">
-        DELETE FROM board WHERE id = #{memberId}
-    </delete>
-    
-    <!-- 사용자 ID로 관련된 반려견 삭제 -->
-    <delete id="deleteByMemberIdInDog" parameterType="int">
-        DELETE FROM dog WHERE memberId = #{memberId}
-    </delete>
+<!-- 사용자를 삭제하는 SQL 문 -->
+<delete id="deleteByMemberId" parameterType="int">
+    DELETE FROM member WHERE memberId = #{memberId}
+</delete>
+
+<!-- 다수의 사용자 삭제 -->
+<delete id="mulDel" parameterType="list">
+    DELETE FROM member WHERE memberId IN 
+    <foreach collection="list" item="memberId" open="(" separator="," close=")">
+        #{memberId}
+    </foreach>
+</delete>
 
 </mapper>

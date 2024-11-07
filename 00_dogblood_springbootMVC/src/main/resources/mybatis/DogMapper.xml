@@ -64,6 +64,9 @@
 		WHERE dogId = #{dogId}
 	</update>
 
+<delete id="deleteByMemberId" parameterType="int">
+    DELETE FROM dog WHERE memberId = #{memberId}
+</delete>
 
 
 </mapper>

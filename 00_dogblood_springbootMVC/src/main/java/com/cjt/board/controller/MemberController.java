@@ -181,20 +181,23 @@ public class MemberController {
 		return "redirect:/user/userList";
 	}
 	
-//	@RequestMapping(value = "mulDel", method = {RequestMethod.POST, RequestMethod.GET})
-//	public String mulDel(@Validated DelUserCommand delUserCommand,
-//	                     BindingResult result,
-//	                     Model model) {
-//	    if (result.hasErrors()) {
-//	        System.out.println("최소 하나 체크하기.");
-//	        List<MemberDto> list = memberService.getAllUserList();
-//	        model.addAttribute("list", list);
-//	        return "user/userList";
-//	    }
-//	    memberService.mulDel(delUserCommand.getMemberIds()); // 리스트로 수정된 부분
-//	    System.out.println("사용자 삭제.");
-//	    return "redirect:/user/userList";
-//	}
+	@PostMapping("/mulDel")
+	public String mulDel(@Validated DelUserCommand delUserCommand,
+	                     BindingResult result,
+	                     Model model) {
+	    if (result.hasErrors()) {
+	        System.out.println("최소 하나 체크하기.");
+	        List<MemberDto> list = memberService.getAllUserList();
+	        model.addAttribute("list", list);
+	        return "user/userList";
+	    }
+	    
+	    // List<Integer>를 사용하여 회원 삭제
+	    memberService.mulDel(delUserCommand.getMemberIds());
+	    
+	    System.out.println("사용자 삭제 완료.");
+	    return "redirect:/user/userList";
+	}
 
 
 

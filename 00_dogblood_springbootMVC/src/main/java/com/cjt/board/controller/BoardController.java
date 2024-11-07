@@ -10,8 +10,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.cjt.board.command.DelBoardCommand;
 import com.cjt.board.command.InsertBoardCommand;
 import com.cjt.board.command.UpdateBoardCommand;
 import com.cjt.board.command.UpdateDogCommand;
@@ -101,18 +103,19 @@ public class BoardController {
         return "redirect:/board/boardList";
     }
 
-//    @PostMapping(value = "/mulDel")
-//    public String mulDel(@Validated DelBoardCommand delBoardCommand,
-//                         BindingResult result,
-//                         Model model) {
-//        if (result.hasErrors()) {
-//            System.out.println("최소 하나 체크하기.");
-//            List<BoardDto> list = boardService.getAllList();
-//            model.addAttribute("list", list);
-//            return "board/boardList"; // 오류 시 목록으로 돌아감
-//        }
-//        
-//        boardService.mulDel(delBoardCommand.getSeq()); // 선택된 게시물 삭제
-//        return "redirect:/board/boardList"; // 삭제 후 목록으로 리다이렉트
-//    }
+    // 여러 게시물 삭제
+    @PostMapping("/mulDel")
+    public String mulDel(@RequestParam("boardIds") List<Integer> boardIds, Model model) {
+        if (boardIds == null || boardIds.isEmpty()) {
+            model.addAttribute("errorMessage", "삭제할 게시물이 선택되지 않았습니다.");
+            return "board/boardList"; // 삭제할 게시물이 없을 경우 다시 목록으로
+        }
+
+        // 게시물 삭제
+        boardService.mulDel(boardIds);
+
+        System.out.println("삭제된 게시물 ID 목록: " + boardIds);
+
+        return "redirect:/board/boardList"; // 게시물 목록으로 리다이렉트
+    }
 }

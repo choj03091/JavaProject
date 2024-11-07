@@ -7,10 +7,10 @@
 <title>게시판 상세보기</title>
 <link rel="stylesheet" th:href="@{/css/layout.css}" />
 <script type="text/javascript">
-        function updateEX() {
-            return confirm("수정하시겠습니까?");
-        }
-    </script>
+	function updateEX() {
+		return confirm("수정하시겠습니까?");
+	}
+</script>
 </head>
 <body>
 	<div layout:fragment="content">
@@ -52,10 +52,9 @@
 					</tr>
 					<tr>
 						<td colspan="2"><th:block
-								th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
-								<button type="submit" class="btn">수정</button>
-								<button type="button" class="btn"
-									th:onclick="|location.href='@{/board/mulDel(seq=${dto.boardId})}'|">삭제</button>
+								th:if="${session.mdto != null and session.mdto.id == dto.memberUsername}">
+								<button type="button" class="btn btn-danger"
+									th:onclick="|location.href='@{/board/mulDel(boardId=${dto.boardId})}'|">삭제</button>
 							</th:block>
 							<button type="button" class="btn"
 								th:onclick="|location.href='@{/board/boardList}'|">목록</button></td>

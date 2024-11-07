@@ -123,19 +123,16 @@ public class MemberService {
         memberMapper.insertUser(dto);
     }
 
-//    @Transactional
-//    public boolean mulDel(List<Integer> memberIds) {
-//        // 게시글 삭제
-//        for (Integer memberId : memberIds) {
-//            boardMapper.mulDel(memberId); // 각 memberId를 직접 전달
-//        }
-//        // 반려견 삭제
-//        for (Integer memberId : memberIds) {
-//            dogMapper.deleteByMemberId(memberId); // 반려견 삭제 메소드 호출
-//        }
-//        // 회원 삭제
-//        return memberMapper.mulDel(memberIds);
-//    }
-
+    public void mulDel(List<Integer> memberIds) {
+        for (Integer memberId : memberIds) {
+            System.out.println("삭제 중인 사용자 ID: " + memberId);
+            // 사용자의 게시물 삭제
+            boardMapper.deleteByMemberId(memberId);
+            // 사용자의 반려견 삭제
+            dogMapper.deleteByMemberId(memberId);
+            // 회원 삭제
+            memberMapper.deleteByMemberId(memberId);
+        }
+    }
 }
 
