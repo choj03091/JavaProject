@@ -30,18 +30,13 @@
     ORDER BY b.regDate DESC
 </select>
 
-	<select id="getBoard" parameterType="Integer"
-		resultMap="boardDtoMap">
-		SELECT B.boardId, B.MEMBERID, B.TITLE, B.CONTENT,
-		B.REGDATE
-		,F.FILE_SEQ, F.ORIGIN_FILENAME, F.STORED_FILENAME
-		FROM board B
-		LEFT OUTER JOIN
-		FILEINFO F
-		ON B.boardId = F.boardId
-		WHERE B.boardId
-		= #{boardId}
-	</select>
+<select id="getBoard" parameterType="int" resultType="boardDto">
+    SELECT b.boardId, b.memberId, b.title, b.content, b.regDate, b.delFlag,
+           m.id AS memberUsername, m.name AS memberName
+    FROM board b
+    JOIN member m ON b.memberId = m.memberId
+    WHERE b.boardId = #{boardId} AND b.delFlag = 'N'
+</select>
 
 	<!-- useGeneratedKeys="true" keyProperty="board_seq" : 증가된 board_seq값을 BoardDto에 
 		전달 : insertBoard(boardDto) -->

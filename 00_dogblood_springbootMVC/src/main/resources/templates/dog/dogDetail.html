@@ -1,111 +1,107 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>반려견 상세 정보</title>
-    <script type="text/javascript">
+<meta charset="UTF-8">
+<title>반려견 상세 정보</title>
+<script type="text/javascript">
         function updateEX() {
             return confirm("수정하시겠습니까?");
         }
     </script>
-    <style type="text/css">
-        /* 추가 스타일 필요시 작성 */
-    </style>
+<style type="text/css">
+/* 추가 스타일 필요시 작성 */
+</style>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="container mt-5">
-        <h2 class="mb-4">반려견 상세 정보</h2>
-        <form action="/dog/dogUpdate" method="post" onsubmit="return updateEX()" th:object="${updateDogCommand}">
-            <input type="hidden" name="dogId" th:value="${dto.dogId}"/>
+	<div layout:fragment="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">반려견 상세 정보</h2>
+			<form action="/dog/dogUpdate" method="post"
+				onsubmit="return updateEX()" th:object="${updateDogCommand}">
+				<input type="hidden" name="dogId" th:value="${dto.dogId}" />
 
-            <table class="table">
-                <tr>
-                    <th>회원 ID</th>
-                    <td th:text="${dto.memberUsername}">회원 ID</td>
-                </tr>
-                <tr>
-                    <th>회원 이름</th>
-                    <td th:text="${dto.memberName}">회원 이름</td>
-                </tr>
-                <tr>
-                    <th>반려견 이름</th>
-                    <td>
-                        <input type="text" name="dogName" th:value="${dto.dogName}" class="form-control"/>
-                        <span th:if="${#fields.hasErrors('dogName')}" th:errors="*{dogName}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>품종</th>
-                    <td>
-                        <input type="text" name="dogBreed" th:value="${dto.dogBreed}" class="form-control"/>
-                        <span th:if="${#fields.hasErrors('dogBreed')}" th:errors="*{dogBreed}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>나이</th>
-                    <td>
-                        <input type="number" name="dogAge" th:value="${dto.dogAge}" class="form-control"/>
-                        <span th:if="${#fields.hasErrors('dogAge')}" th:errors="*{dogAge}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>몸무게 (kg)</th>
-                    <td>
-                        <input type="number" step="0.1" name="dogWeight" th:value="${dto.dogWeight}" class="form-control"/>
-                        <span th:if="${#fields.hasErrors('dogWeight')}" th:errors="*{dogWeight}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>성별</th>
-                    <td>
-                        <select name="dogGender" class="form-control">
-                            <option value="수컷" th:selected="${dto.dogGender == '수컷'}">수컷</option>
-                            <option value="암컷" th:selected="${dto.dogGender == '암컷'}">암컷</option>
-                        </select>
-                        <span th:if="${#fields.hasErrors('dogGender')}" th:errors="*{dogGender}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>약물 복용 여부</th>
-                    <td>
-                        <select name="dogDrug" class="form-control">
-                            <option value="유" th:selected="${dto.dogDrug == '유'}">유</option>
-                            <option value="무" th:selected="${dto.dogDrug == '무'}">무</option>
-                        </select>
-                        <span th:if="${#fields.hasErrors('dogDrug')}" th:errors="*{dogDrug}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>혈액형</th>
-                    <td>
-                        <select name="dogBlood" class="form-control">
-                            <option value="DEA1" th:selected="${dto.dogBlood == 'DEA1'}">DEA1</option>
-                            <option value="DEA1.1" th:selected="${dto.dogBlood == 'DEA1.1'}">DEA1.1</option>
-                            <option value="DEA1.2" th:selected="${dto.dogBlood == 'DEA1.2'}">DEA1.2</option>
-                            <option value="DEA3" th:selected="${dto.dogBlood == 'DEA3'}">DEA3</option>
-                            <option value="DEA4" th:selected="${dto.dogBlood == 'DEA4'}">DEA4</option>
-                            <option value="DEA5" th:selected="${dto.dogBlood == 'DEA5'}">DEA5</option>
-                            <option value="DEA7" th:selected="${dto.dogBlood == 'DEA7'}">DEA7</option>
-                            <option value="DEA8" th:selected="${dto.dogBlood == 'DEA8'}">DEA8</option>
-                        </select>
-                        <span th:if="${#fields.hasErrors('dogBlood')}" th:errors="*{dogBlood}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>등록일</th>
-                    <td th:text="${#dates.format(dto.regDate, 'yyyy-MM-dd')}">등록일</td>
-                </tr>
-            </table>
+				<table class="table">
+					<tr>
+						<th>회원 ID</th>
+						<td th:text="${dto.memberUsername}">회원 ID</td>
+					</tr>
+					<tr>
+						<th>회원 이름</th>
+						<td th:text="${dto.memberName}">회원 이름</td>
+					</tr>
+					<tr>
+						<th>반려견 이름</th>
+						<td><input type="text" name="dogName"
+							th:value="${dto.dogName}" class="form-control" /> <span
+							th:if="${#fields.hasErrors('dogName')}" th:errors="*{dogName}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>품종</th>
+						<td><input type="text" name="dogBreed"
+							th:value="${dto.dogBreed}" class="form-control" /> <span
+							th:if="${#fields.hasErrors('dogBreed')}" th:errors="*{dogBreed}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>나이</th>
+						<td><input type="number" name="dogAge"
+							th:value="${dto.dogAge}" class="form-control" /> <span
+							th:if="${#fields.hasErrors('dogAge')}" th:errors="*{dogAge}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>몸무게 (kg)</th>
+						<td><input type="number" step="0.1" name="dogWeight"
+							th:value="${dto.dogWeight}" class="form-control" /> <span
+							th:if="${#fields.hasErrors('dogWeight')}"
+							th:errors="*{dogWeight}"></span></td>
+					</tr>
+					<tr>
+						<th>성별</th>
+						<td><select name="dogGender" class="form-control">
+								<option value="수컷" th:selected="${dto.dogGender == '수컷'}">수컷</option>
+								<option value="암컷" th:selected="${dto.dogGender == '암컷'}">암컷</option>
+						</select> <span th:if="${#fields.hasErrors('dogGender')}"
+							th:errors="*{dogGender}"></span></td>
+					</tr>
+					<tr>
+						<th>약물 복용 여부</th>
+						<td><select name="dogDrug" class="form-control">
+								<option value="유" th:selected="${dto.dogDrug == '유'}">유</option>
+								<option value="무" th:selected="${dto.dogDrug == '무'}">무</option>
+						</select> <span th:if="${#fields.hasErrors('dogDrug')}"
+							th:errors="*{dogDrug}"></span></td>
+					</tr>
+					<tr>
+						<th>혈액형</th>
+						<td><select name="dogBlood" class="form-control">
+								<option value="DEA1" th:selected="${dto.dogBlood == 'DEA1'}">DEA1</option>
+								<option value="DEA1.1" th:selected="${dto.dogBlood == 'DEA1.1'}">DEA1.1</option>
+								<option value="DEA1.2" th:selected="${dto.dogBlood == 'DEA1.2'}">DEA1.2</option>
+								<option value="DEA3" th:selected="${dto.dogBlood == 'DEA3'}">DEA3</option>
+								<option value="DEA4" th:selected="${dto.dogBlood == 'DEA4'}">DEA4</option>
+								<option value="DEA5" th:selected="${dto.dogBlood == 'DEA5'}">DEA5</option>
+								<option value="DEA7" th:selected="${dto.dogBlood == 'DEA7'}">DEA7</option>
+								<option value="DEA8" th:selected="${dto.dogBlood == 'DEA8'}">DEA8</option>
+						</select> <span th:if="${#fields.hasErrors('dogBlood')}"
+							th:errors="*{dogBlood}"></span></td>
+					</tr>
+					<tr>
+						<th>등록일</th>
+						<td th:text="${#dates.format(dto.regDate, 'yyyy-MM-dd')}">등록일</td>
+					</tr>
+				</table>
 
-            <div class="text-right">
-                <button type="submit" class="btn btn-primary">수정</button>
-                <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/dogList}'|">목록</button>
-            </div>
-        </form>
-    </div>
-</div>
+				<div class="text-right">
+					<button type="submit" class="btn btn-primary">수정</button>
+					<button type="button" class="btn btn-secondary"
+						th:onclick="|location.href='@{/dogList}'|">목록</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
