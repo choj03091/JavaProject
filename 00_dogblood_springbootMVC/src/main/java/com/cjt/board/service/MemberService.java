@@ -107,7 +107,7 @@ public class MemberService {
         dto.setAddress(updateUserCommand.getAddress());
         dto.setEmail(updateUserCommand.getEmail());
         dto.setRole(updateUserCommand.getRole());
-        dto.setDelFlag(updateUserCommand.getDelFlag());
+        dto.setDelFlag(updateUserCommand.getDelFlag() != null ? updateUserCommand.getDelFlag() : "N");
         return memberMapper.updateUser(dto);
     }
     

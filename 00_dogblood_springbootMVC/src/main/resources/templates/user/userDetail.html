@@ -1,57 +1,71 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>내 정보</title>
-    <script type="text/javascript">
+<meta charset="UTF-8">
+<title>내 정보 수정</title>
+<script type="text/javascript">
         function updateEX() {
             return confirm("수정하시겠습니까?");
         }
     </script>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="container mt-5">
-            <h2 class="mb-4">내 정보 수정</h2>
-            <form action="/user/myInfo" method="post" onsubmit="return updateEX()" th:object="${userDto}">
-                <input type="hidden" name="memberId" th:value="${userDto.memberId}" />
+	<div layout:fragment="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">회원 정보 수정</h2>
+			<form action="/user/userUpdate" method="post"
+				onsubmit="return updateEX()" th:object="${dto}">
+				<input type="hidden" name="memberId" th:value="${dto.memberId}" />
 
-                <table class="table">
-                    <tr>
-                        <th>회원 ID</th>
-                        <td th:text="${userDto.id}">회원 ID</td>
-                    </tr>
-                    <tr>
-                        <th>회원 이름</th>
-                        <td><input type="text" name="name" th:value="${userDto.name}" class="form-control" />
-                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td><input type="text" name="address" th:value="${userDto.address}" class="form-control" />
-                            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이메일</th>
-                        <td><input type="email" name="email" th:value="${userDto.email}" class="form-control" />
-                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>가입일</th>
-                        <td th:text="${#dates.format(userDto.regDate, 'yyyy-MM-dd')}">가입일</td>
-                    </tr>
-                </table>
+				<table class="table">
+					<tr>
+						<th>회원 ID</th>
+						<td th:text="${dto.id}">회원 ID</td>
+					</tr>
+					<tr>
+						<th>회원 이름</th>
+						<td><input type="text" name="name" th:value="${dto.name}"
+							class="form-control" /> <span
+							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>주소</th>
+						<td><input type="text" name="address"
+							th:value="${dto.address}" class="form-control" /> <span
+							th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td><input type="email" name="email" th:value="${dto.email}"
+							class="form-control" /> <span
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>역할</th>
+						<td><select name="role" class="form-control">
+								<option value="USER" th:selected="${dto.role == 'USER'}">USER</option>
+								<option value="ADMIN" th:selected="${dto.role == 'ADMIN'}">ADMIN</option>
+						</select> <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>가입일</th>
+						<td th:text="${#dates.format(dto.regDate, 'yyyy-MM-dd')}">가입일</td>
+					</tr>
+				</table>
 
-                <div class="text-right">
-                    <button type="submit" class="btn btn-primary">수정</button>
-                    <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/}'|">취소</button>
-                </div>
-            </form>
-        </div>
-    </div>
+				<div class="text-right">
+					<button type="submit" class="btn btn-primary">수정</button>
+					<button type="button" class="btn btn-secondary"
+						th:onclick="|location.href='@{/}'|">취소</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

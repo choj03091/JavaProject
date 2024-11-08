@@ -48,13 +48,11 @@
 	<update id="updateUser" parameterType="memberDto">
 		UPDATE member
 		SET
-		address =
-		#{address},
+		address = #{address},
 		email = #{email},
 		role = #{role},
-		DELFLAG = #{delFlag}
-		WHERE
-		memberId = #{memberId}
+		delFlag = IFNULL(#{delFlag}, 'N')  <!-- delFlag가 NULL일 경우 'N'으로 설정 -->
+		WHERE memberId = #{memberId}
 	</update>
 
 	<insert id="insertUser" parameterType="memberDto">
@@ -65,25 +63,26 @@
 		#{delFlag}, NOW())
 	</insert>
 
-<!-- 사용자를 삭제하는 SQL 문 -->
-<delete id="deleteByMemberId" parameterType="int">
-    DELETE FROM member WHERE memberId = #{memberId}
-</delete>
+	<!-- 사용자를 삭제하는 SQL 문 -->
+	<delete id="deleteByMemberId" parameterType="int">
+		DELETE FROM member WHERE memberId = #{memberId}
+	</delete>
 
-<!-- 다수의 사용자 삭제 -->
-<delete id="mulDel" parameterType="list">
-    DELETE FROM member WHERE memberId IN 
-    <foreach collection="list" item="memberId" open="(" separator="," close=")">
-        #{memberId}
-    </foreach>
-</delete>
+	<!-- 다수의 사용자 삭제 -->
+	<delete id="mulDel" parameterType="list">
+		DELETE FROM member WHERE memberId IN
+		<foreach collection="list" item="memberId" open="("
+			separator="," close=")">
+			#{memberId}
+		</foreach>
+	</delete>
 
-<update id="updateUserInfo" parameterType="memberDto">
-    UPDATE member
-    SET name = #{name},
-        address = #{address},
-        email = #{email}
-    WHERE memberId = #{memberId}
-</update>
+	<update id="updateUserInfo" parameterType="memberDto">
+		UPDATE member
+		SET name = #{name},
+		address = #{address},
+		email = #{email}
+		WHERE memberId = #{memberId}
+	</update>
 
 </mapper>
