@@ -198,9 +198,36 @@ public class MemberController {
 	    System.out.println("사용자 삭제 완료.");
 	    return "redirect:/user/userList";
 	}
+	
+	@GetMapping("/myInfo")
+	public String myInfo(HttpSession session, Model model) {
+	    Integer memberId = (Integer) session.getAttribute("memberId");
+	    
+	    if (memberId == null) {
+	        // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+	        return "redirect:/user/login";
+	    }
+	    
+	    MemberDto userDto = memberService.getUser(memberId);
+	    model.addAttribute("userDto", userDto);
+	    
+	    return "user/myInfo";
+	}
 
+	@PostMapping("/myInfo")
+	public String updateMyInfo(@Validated MemberDto userDto, BindingResult result, HttpSession session, Model model) {
+	    if (result.hasErrors()) {
+	        return "user/myInfo";
+	    }
+	    
+	    // 사용자 정보를 업데이트
+	    memberService.updateUserInfo(userDto);
+	    
+	    // 업데이트된 사용자 정보를 다시 조회하여 세션에 저장
+	    MemberDto updatedUser = memberService.getUser(userDto.getMemberId());
+	    session.setAttribute("mdto", updatedUser); // 세션에 업데이트된 mdto 저장
 
-
+	    return "redirect:/user/myInfo"; // 변경 후 다시 내 정보 페이지로 이동
+	}
 
 }
-

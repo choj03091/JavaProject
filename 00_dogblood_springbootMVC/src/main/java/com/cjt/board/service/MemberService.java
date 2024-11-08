@@ -134,5 +134,8 @@ public class MemberService {
             memberMapper.deleteByMemberId(memberId);
         }
     }
+    
+    public boolean updateUserInfo(MemberDto userDto) {
+        return memberMapper.updateUserInfo(userDto);
+    }
 }
-

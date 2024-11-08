@@ -78,4 +78,12 @@
     </foreach>
 </delete>
 
+<update id="updateUserInfo" parameterType="memberDto">
+    UPDATE member
+    SET name = #{name},
+        address = #{address},
+        email = #{email}
+    WHERE memberId = #{memberId}
+</update>
+
 </mapper>

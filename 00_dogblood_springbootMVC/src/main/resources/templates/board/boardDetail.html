@@ -96,13 +96,12 @@
                     <button type="submit" class="btn btn-primary">수정</button>
                 </div>
             </form>
-            <!-- 목록 버튼 (모든 사용자에게 표시) -->
             <a th:href="@{/board/boardList}" class="btn btn-secondary">목록</a>
-            <!-- 삭제 버튼 (모든 사용자에게 표시) -->
-            <form action="/board/boardDelete" method="post" th:object="${deleteBoardCommand}" style="display: inline;" th:if="${session.mdto != null}">
-                <input type="hidden" name="boardId" th:value="${dto.boardId}" />
-                <button type="submit" class="btn btn-danger btn-inline" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
-            </form>
+<form action="/board/boardDelete" method="post" th:object="${deleteBoardCommand}" style="display: inline;"
+      th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
+    <input type="hidden" name="boardId" th:value="${dto.boardId}" />
+    <button type="submit" class="btn btn-danger btn-inline" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
+</form>
 		</div>
 	</div>
 </body>

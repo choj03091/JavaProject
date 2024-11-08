@@ -13,7 +13,7 @@
 <body>
     <div layout:fragment="content">
         <div class="container mt-5">
-            <h2 class="mb-4">내 정보 수정</h2>
+            <h2 class="mb-4">내 정보</h2>
             <form action="/user/myInfo" method="post" onsubmit="return updateEX()" th:object="${userDto}">
                 <input type="hidden" name="memberId" th:value="${userDto.memberId}" />
 
@@ -24,20 +24,23 @@
                     </tr>
                     <tr>
                         <th>회원 이름</th>
-                        <td><input type="text" name="name" th:value="${userDto.name}" class="form-control" />
-                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        <td>
+                            <input type="text" name="name" th:value="${userDto.name}" class="form-control" />
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errorField"></span>
                         </td>
                     </tr>
                     <tr>
                         <th>주소</th>
-                        <td><input type="text" name="address" th:value="${userDto.address}" class="form-control" />
-                            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                        <td>
+                            <input type="text" name="address" th:value="${userDto.address}" class="form-control" />
+                            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="errorField"></span>
                         </td>
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td><input type="email" name="email" th:value="${userDto.email}" class="form-control" />
-                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        <td>
+                            <input type="email" name="email" th:value="${userDto.email}" class="form-control" />
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="errorField"></span>
                         </td>
                     </tr>
                     <tr>

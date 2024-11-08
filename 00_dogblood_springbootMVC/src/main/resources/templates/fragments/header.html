@@ -28,6 +28,7 @@
 	    <!-- ROLE이 ADMIN인 경우에만 사용자 조회와 반려견 조회 메뉴 표시 -->
 	    <li th:if="${session.role == 'ADMIN'}"><a href="/user/userList">사용자 조회</a></li>
 	    <li th:if="${session.role == 'ADMIN'}"><a href="/dog/dogList">반려견 조회</a></li>
+	    <li th:if="${session.role == 'USER'}"><a href="/user/myInfo">내 정보</a></li>
 	  </ul>
 	</div>
 	</div>

@@ -25,4 +25,5 @@ public interface MemberMapper {
     public boolean insertUser(MemberDto dto);
     void deleteByMemberId(int memberId); // 특정 사용자의 삭제 메소드
     void mulDel(List<Integer> memberIds); // 다수의 사용자 삭제 메소드
+    public boolean updateUserInfo(MemberDto userdto);
 }
