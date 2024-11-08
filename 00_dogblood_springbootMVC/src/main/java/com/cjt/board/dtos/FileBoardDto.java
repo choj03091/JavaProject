@@ -5,8 +5,8 @@ import org.apache.ibatis.type.Alias;
 @Alias(value = "fileBoardDto")
 public class FileBoardDto {
 
-	private int file_seq;
-	private int board_seq;
+	private int fileId;
+	private int boardId;
 	private String origin_filename;
 	private String stored_filename;
 	
@@ -14,28 +14,20 @@ public class FileBoardDto {
 		super();
 	}
 
-	public FileBoardDto(int file_seq, int board_seq, String origin_filename, String stored_filename) {
-		super();
-		this.file_seq = file_seq;
-		this.board_seq = board_seq;
-		this.origin_filename = origin_filename;
-		this.stored_filename = stored_filename;
+	public int getFileId() {
+		return fileId;
 	}
 
-	public int getFile_seq() {
-		return file_seq;
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
 	}
 
-	public void setFile_seq(int file_seq) {
-		this.file_seq = file_seq;
+	public int getBoardId() {
+		return boardId;
 	}
 
-	public int getBoard_seq() {
-		return board_seq;
-	}
-
-	public void setBoard_seq(int board_seq) {
-		this.board_seq = board_seq;
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
 	}
 
 	public String getOrigin_filename() {
@@ -56,8 +48,18 @@ public class FileBoardDto {
 
 	@Override
 	public String toString() {
-		return "FileBoardDto [file_seq=" + file_seq + ", board_seq=" + board_seq + ", origin_filename="
-				+ origin_filename + ", stored_filename=" + stored_filename + "]";
+		return "FileBoardDto [fileId=" + fileId + ", boardId=" + boardId + ", origin_filename=" + origin_filename
+				+ ", stored_filename=" + stored_filename + "]";
 	}
+	
+	public FileBoardDto(int fileId, int boardId, String origin_filename, String stored_filename) {
+		super();
+		this.fileId = fileId;
+		this.boardId = boardId;
+		this.origin_filename = origin_filename;
+		this.stored_filename = stored_filename;
+	}
+
+
 	
 }

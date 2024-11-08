@@ -27,10 +27,3 @@ public interface BoardMapper {
     // 여러 게시물 삭제
     public void mulDel(List<Integer> boardIds); // 여러 게시물 삭제 메서드
 }
-
-
-
-
-
-
-

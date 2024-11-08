@@ -1,6 +1,8 @@
 package com.cjt.board.dtos;
 
 import java.util.Date;
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -25,110 +27,109 @@ public class DogDto {
     private String memberUsername; // 회원 ID
     private String memberName;     // 회원 이름
 
-    // Getters and Setters
-    public int getDogId() {
-        return dogId;
-    }
+	public int getDogId() {
+		return dogId;
+	}
 
-    public void setDogId(int dogId) {
-        this.dogId = dogId;
-    }
+	public void setDogId(int dogId) {
+		this.dogId = dogId;
+	}
 
-    public int getMemberId() {
-        return memberId;
-    }
+	public int getMemberId() {
+		return memberId;
+	}
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
 
-    public String getDogName() {
-        return dogName;
-    }
+	public String getDogName() {
+		return dogName;
+	}
 
-    public void setDogName(String dogName) {
-        this.dogName = dogName;
-    }
+	public void setDogName(String dogName) {
+		this.dogName = dogName;
+	}
 
-    public String getDogBreed() {
-        return dogBreed;
-    }
+	public String getDogBreed() {
+		return dogBreed;
+	}
 
-    public void setDogBreed(String dogBreed) {
-        this.dogBreed = dogBreed;
-    }
+	public void setDogBreed(String dogBreed) {
+		this.dogBreed = dogBreed;
+	}
 
-    public int getDogAge() {
-        return dogAge;
-    }
+	public int getDogAge() {
+		return dogAge;
+	}
 
-    public void setDogAge(int dogAge) {
-        this.dogAge = dogAge;
-    }
+	public void setDogAge(int dogAge) {
+		this.dogAge = dogAge;
+	}
 
-    public double getDogWeight() {
-        return dogWeight;
-    }
+	public double getDogWeight() {
+		return dogWeight;
+	}
 
-    public void setDogWeight(double dogWeight) {
-        this.dogWeight = dogWeight;
-    }
+	public void setDogWeight(double dogWeight) {
+		this.dogWeight = dogWeight;
+	}
 
-    public String getDogGender() {
-        return dogGender;
-    }
+	public String getDogGender() {
+		return dogGender;
+	}
 
-    public void setDogGender(String dogGender) {
-        this.dogGender = dogGender;
-    }
+	public void setDogGender(String dogGender) {
+		this.dogGender = dogGender;
+	}
 
-    public String getDogDrug() {
-        return dogDrug;
-    }
+	public String getDogDrug() {
+		return dogDrug;
+	}
 
-    public void setDogDrug(String dogDrug) {
-        this.dogDrug = dogDrug;
-    }
+	public void setDogDrug(String dogDrug) {
+		this.dogDrug = dogDrug;
+	}
 
-    public String getDogBlood() {
-        return dogBlood;
-    }
+	public String getDogBlood() {
+		return dogBlood;
+	}
 
-    public void setDogBlood(String dogBlood) {
-        this.dogBlood = dogBlood;
-    }
+	public void setDogBlood(String dogBlood) {
+		this.dogBlood = dogBlood;
+	}
 
-    public Date getRegDate() {
-        return regDate;
-    }
+	public Date getRegDate() {
+		return regDate;
+	}
 
-    public void setRegDate(Date regDate) {
-        this.regDate = regDate;
-    }
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
 
-    public String getDelFlag() {
-        return delFlag;
-    }
+	public String getDelFlag() {
+		return delFlag;
+	}
 
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
 
-    public String getMemberUsername() {
-        return memberUsername;
-    }
+	public String getMemberUsername() {
+		return memberUsername;
+	}
 
-    public void setMemberUsername(String memberUsername) {
-        this.memberUsername = memberUsername;
-    }
+	public void setMemberUsername(String memberUsername) {
+		this.memberUsername = memberUsername;
+	}
 
-    public String getMemberName() {
-        return memberName;
-    }
+	public String getMemberName() {
+		return memberName;
+	}
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 
 	@Override
 	public String toString() {
@@ -137,5 +138,8 @@ public class DogDto {
 				+ dogDrug + ", dogBlood=" + dogBlood + ", regDate=" + regDate + ", delFlag=" + delFlag
 				+ ", memberUsername=" + memberUsername + ", memberName=" + memberName + "]";
 	}
+
+
+
     
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
@@ -10,8 +10,7 @@
 <div layout:fragment="content">
     <div id="container">
         <h1>게시물 추가하기</h1>
-        <form action="/board/boardInsert" method="post" th:object="${insertBoardCommand}">
-            <!-- memberId를 숨겨진 필드로 추가 -->
+        <form action="/board/boardInsert" method="post" th:object="${insertBoardCommand}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{memberId}" />
             
             <table class="table">
@@ -27,6 +26,12 @@
                     <td>
                         <textarea name="content" th:field="*{content}" class="form-control"></textarea>
                         <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>파일</th>
+                    <td>
+                        <input type="file" name="files" multiple class="form-control" />
                     </td>
                 </tr>
                 <tr>

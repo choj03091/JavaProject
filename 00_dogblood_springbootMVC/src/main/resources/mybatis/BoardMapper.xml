@@ -9,20 +9,25 @@
 		<result property="title" column="TITLE" />
 		<result property="content" column="CONTENT" />
 		<result property="regDate" column="REGDATE" />
+		<result property="memberUsername" column="MEMBERUSERNAME" /> <!-- 추가된 부분 -->
+		<result property="memberName" column="MEMBERNAME" /> <!-- 추가된 부분 -->
 		<collection property="fileBoardDto"
-			resultMap="fileBoardDtoMap"></collection>
+			resultMap="fileBoardDtoMap" />
 	</resultMap>
 
+
 	<resultMap type="fileBoardDto" id="fileBoardDtoMap">
-		<id property="file_seq" column="FILE_SEQ" />
+		<id property="fileId" column="FILEID" />
 		<result property="boardId" column="BOARDID" />
 		<result property="origin_filename" column="ORIGIN_FILENAME" />
 		<result property="stored_filename" column="STORED_FILENAME" />
 	</resultMap>
 
 
-	<select id="getAllList" resultType="boardDto">
-		SELECT b.boardId, b.title, b.content, b.regDate, b.delFlag,
+
+
+	<select id="getAllList" resultMap="boardDtoMap">
+		SELECT b.boardId, b.memberId, b.title, b.content, b.regDate, b.delFlag,
 		m.id AS memberUsername, m.name AS memberName
 		FROM board b
 		JOIN member m ON b.memberId = m.memberId
@@ -30,48 +35,49 @@
 		ORDER BY b.regDate DESC
 	</select>
 
-	<select id="getBoard" parameterType="int" resultType="boardDto">
-		SELECT b.boardId, b.memberId, b.title, b.content, b.regDate, b.delFlag,
-		m.id AS memberUsername, m.name AS memberName
+	<select id="getBoard" parameterType="int"
+		resultMap="boardDtoMap">
+		SELECT b.boardId, b.memberId, b.title, b.content, b.regDate,
+		b.delFlag,
+		m.id AS memberUsername, m.name AS memberName,
+		f.fileId,
+		f.origin_filename
 		FROM board b
 		JOIN member m ON b.memberId = m.memberId
-		WHERE b.boardId = #{boardId} AND b.delFlag = 'N'
+		LEFT JOIN fileinfo f ON b.boardId = f.boardId
+		WHERE b.boardId =
+		#{boardId} AND b.delFlag = 'N'
 	</select>
 
-	<!-- useGeneratedKeys="true" keyProperty="board_seq" : 증가된 board_seq값을 BoardDto에 
-		전달 : insertBoard(boardDto) -->
-
-
-	<insert id="insertBoard" parameterType="boardDto">
-		INSERT INTO board
-		(memberId, title, content, regDate, delFlag)
-		VALUES (#{memberId},
-		#{title},
+	<insert id="insertBoard" parameterType="boardDto"
+		useGeneratedKeys="true" keyProperty="boardId">
+		INSERT INTO board (memberId,
+		title, content, regDate, delFlag)
+		VALUES (#{memberId}, #{title},
 		#{content}, NOW(), 'N')
 	</insert>
 
 	<update id="updateBoard" parameterType="boardDto">
 		UPDATE board
-		SET
-		TITLE=#{title}, CONTENT=#{content}
-		WHERE boardId=#{boardId}
+		SET TITLE =
+		#{title}, CONTENT = #{content}
+		WHERE boardId = #{boardId}
 	</update>
 
 	<delete id="deleteByMemberId" parameterType="int">
-		DELETE FROM board WHERE memberId = #{memberId}
+		DELETE FROM board
+		WHERE memberId = #{memberId}
 	</delete>
 
 	<delete id="deleteByBoardId" parameterType="int">
 		DELETE FROM board WHERE boardId = #{boardId}
 	</delete>
 
-    <!-- 여러 게시물 삭제 -->
-    <delete id="mulDel" parameterType="list">
-        DELETE FROM board WHERE boardId IN
-        <foreach collection="boardIds" item="boardId" open="(" separator="," close=")">
-            #{boardId}
-        </foreach>
-    </delete>
-
-
+	<delete id="mulDel" parameterType="list">
+		DELETE FROM board WHERE boardId IN
+		<foreach collection="boardIds" item="boardId" open="("
+			separator="," close=")">
+			#{boardId}
+		</foreach>
+	</delete>
 </mapper>
