@@ -138,4 +138,8 @@ public class MemberService {
     public boolean updateUserInfo(MemberDto userDto) {
         return memberMapper.updateUserInfo(userDto);
     }
+    
+    public void deleteUser(int memberId) {
+        memberMapper.deleteByMemberId(memberId);
+    }
 }

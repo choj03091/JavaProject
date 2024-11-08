@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartRequest;
 
@@ -228,6 +229,17 @@ public class MemberController {
 	    session.setAttribute("mdto", updatedUser); // 세션에 업데이트된 mdto 저장
 
 	    return "redirect:/user/myInfo"; // 변경 후 다시 내 정보 페이지로 이동
+	}
+	
+	@PostMapping("/deleteUser")
+	public String deleteAccount(@RequestParam("memberId") int memberId, HttpSession session) {
+	    // 회원 탈퇴 처리
+	    memberService.deleteUser(memberId);
+
+	    // 세션 무효화
+	    session.invalidate();
+
+	    return "redirect:/"; // 메인 페이지로 리다이렉트
 	}
 
 }

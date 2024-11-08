@@ -55,54 +55,57 @@
 			</form>
 
 			<h3>첨부된 이미지</h3>
-				<div class="col-12 col-md-4 mb-3"
-					th:each="file : ${dto.fileBoardDto}">
-					<div class="card">
-						<!-- 썸네일 크기 설정 -->
-						<img
-							th:src="@{/upload/{filename}(filename=${file.origin_filename})}"
-							alt="Uploaded Image" class="img-thumbnail"
-							style="width: 150px; height: auto; object-fit: cover;" />
-					</div>
+			<div class="col-12 col-md-4 mb-3"
+				th:each="file : ${dto.fileBoardDto}">
+				<div class="card">
+					<!-- 썸네일 크기 설정 -->
+					<img
+						th:src="@{/upload/{filename}(filename=${file.origin_filename})}"
+						alt="Uploaded Image" class="img-thumbnail"
+						style="width: 150px; height: auto; object-fit: cover;" />
 				</div>
 			</div>
-
-			<!-- Dog Detail Section -->
-			<h3 class="mt-5">반려견 목록</h3>
-			<table class="table">
-				<tr>
-					<th>반려견 이름</th>
-					<th>품종</th>
-					<th>나이</th>
-					<th>몸무게 (kg)</th>
-					<th>성별</th>
-					<th>약물 복용 여부</th>
-					<th>혈액형</th>
-					<th>등록일</th>
-				</tr>
-				<tr th:each="dog : ${dogList}">
-					<td th:text="${dog.dogName}">반려견 이름</td>
-					<td th:text="${dog.dogBreed}">품종</td>
-					<td th:text="${dog.dogAge}">나이</td>
-					<td th:text="${dog.dogWeight}">몸무게</td>
-					<td th:text="${dog.dogGender}">성별</td>
-					<td th:text="${dog.dogDrug}">약물 복용 여부</td>
-					<td th:text="${dog.dogBlood}">혈액형</td>
-					<td th:text="${#dates.format(dog.regDate, 'yyyy-MM-dd')}">등록일</td>
-				</tr>
-			</table>
-			                <!-- 수정 버튼 (작성자만 접근 가능) -->
-                <div th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
-                    <button type="submit" class="btn btn-primary">수정</button>
-                </div>
-            </form>
-            <a th:href="@{/board/boardList}" class="btn btn-secondary">목록</a>
-<form action="/board/boardDelete" method="post" th:object="${deleteBoardCommand}" style="display: inline;"
-      th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
-    <input type="hidden" name="boardId" th:value="${dto.boardId}" />
-    <button type="submit" class="btn btn-danger btn-inline" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
-</form>
 		</div>
+
+		<!-- Dog Detail Section -->
+		<h3 class="mt-5">반려견 목록</h3>
+		<table class="table">
+			<tr>
+				<th>반려견 이름</th>
+				<th>품종</th>
+				<th>나이</th>
+				<th>몸무게 (kg)</th>
+				<th>성별</th>
+				<th>약물 복용 여부</th>
+				<th>혈액형</th>
+				<th>등록일</th>
+			</tr>
+			<tr th:each="dog : ${dogList}">
+				<td th:text="${dog.dogName}">반려견 이름</td>
+				<td th:text="${dog.dogBreed}">품종</td>
+				<td th:text="${dog.dogAge}">나이</td>
+				<td th:text="${dog.dogWeight}">몸무게</td>
+				<td th:text="${dog.dogGender}">성별</td>
+				<td th:text="${dog.dogDrug}">약물 복용 여부</td>
+				<td th:text="${dog.dogBlood}">혈액형</td>
+				<td th:text="${#dates.format(dog.regDate, 'yyyy-MM-dd')}">등록일</td>
+			</tr>
+		</table>
+		<!-- 수정 버튼 (작성자만 접근 가능) -->
+		<div
+			th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
+			<button type="submit" class="btn btn-primary">수정</button>
+		</div>
+		</form>
+		<a th:href="@{/board/boardList}" class="btn btn-secondary">목록</a>
+		<form action="/board/boardDelete" method="post"
+			th:object="${deleteBoardCommand}" style="display: inline;"
+			th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
+			<input type="hidden" name="boardId" th:value="${dto.boardId}" />
+			<button type="submit" class="btn btn-danger btn-inline"
+				onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
+		</form>
+	</div>
 	</div>
 </body>
 </html>

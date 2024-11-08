@@ -8,12 +8,17 @@
         function updateEX() {
             return confirm("수정하시겠습니까?");
         }
+
+        function confirmDelete() {
+            return confirm("정말로 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.");
+        }
     </script>
 </head>
 <body>
     <div layout:fragment="content">
         <div class="container mt-5">
             <h2 class="mb-4">내 정보</h2>
+            <!-- 수정 폼 -->
             <form action="/user/myInfo" method="post" onsubmit="return updateEX()" th:object="${userDto}">
                 <input type="hidden" name="memberId" th:value="${userDto.memberId}" />
 
@@ -53,6 +58,12 @@
                     <button type="submit" class="btn btn-primary">수정</button>
                     <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/}'|">취소</button>
                 </div>
+            </form>
+            
+            <!-- 탈퇴 폼 -->
+            <form action="/user/deleteUser" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+                <input type="hidden" name="memberId" th:value="${userDto.memberId}" />
+                <button type="submit" class="btn btn-danger">탈퇴</button>
             </form>
         </div>
     </div>
