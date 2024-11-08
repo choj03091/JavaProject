@@ -35,7 +35,8 @@
 	<!-- 반려견 추가 -->
 	<insert id="insertDog" parameterType="dogDto">
 		INSERT INTO dog
-		(memberId, dogName, dogBreed, dogAge,
+		(memberId,
+		dogName, dogBreed, dogAge,
 		dogWeight, dogGender, dogDrug, dogBlood,
 		regDate, DELFLAG)
 		VALUES (#{memberId}, #{dogName}, #{dogBreed},
@@ -77,11 +78,13 @@
 	</update>
 
 	<delete id="deleteByMemberId" parameterType="int">
-		DELETE FROM dog WHERE memberId = #{memberId}
+		DELETE FROM dog
+		WHERE memberId = #{memberId}
 	</delete>
 
 	<delete id="deleteByDogId" parameterType="int">
-		DELETE FROM dog WHERE dogId = #{dogId}
+		DELETE FROM dog WHERE
+		dogId = #{dogId}
 	</delete>
 
 	<delete id="mulDel" parameterType="list">
@@ -91,6 +94,17 @@
 			#{dogId}
 		</foreach>
 	</delete>
+
+	<select id="getDogByMemberId" parameterType="int"
+		resultType="dogDto">
+		SELECT d.dogId, d.memberId, d.dogName, d.dogBreed, d.dogAge,
+		d.dogWeight, d.dogGender, d.dogDrug, d.dogBlood, d.regDate, d.DELFLAG,
+		m.id AS memberUsername, m.name AS memberName
+		FROM dog d
+		JOIN member m ON d.memberId = m.memberId
+		WHERE d.memberId = #{memberId} AND d.DELFLAG = 'N'
+		LIMIT 1
+	</select>
 
 
 </mapper>

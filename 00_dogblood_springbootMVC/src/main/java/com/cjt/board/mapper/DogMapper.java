@@ -17,4 +17,6 @@ public interface DogMapper {
     public void deleteByMemberId(int memberId);
     public void deleteByDogId(int dogId);
     public void mulDel(List<Integer> dogIds);
+    public DogDto getDogByMemberId(int memberId);
+
 }

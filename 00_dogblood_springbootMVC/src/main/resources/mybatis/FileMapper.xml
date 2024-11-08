@@ -11,8 +11,10 @@
 	</resultMap>
 
 	<insert id="insertFileBoard" parameterType="fileBoardDto">
-		INSERT INTO fileinfo (boardId, origin_filename, stored_filename)
-		VALUES (#{boardId}, #{origin_filename}, #{stored_filename})
+		INSERT INTO fileinfo
+		(boardId, origin_filename, stored_filename)
+		VALUES (#{boardId},
+		#{origin_filename}, #{stored_filename})
 	</insert>
 
 	<select id="getFilesByBoardId" parameterType="int"
@@ -23,12 +25,14 @@
 	</select>
 
 	<delete id="deleteFilesByBoardId" parameterType="int">
-		DELETE FROM fileinfo
+		DELETE FROM
+		fileinfo
 		WHERE boardId = #{boardId}
 	</delete>
 
 	<delete id="deleteByBoardId" parameterType="int">
-		DELETE FROM fileinfo WHERE boardId = #{boardId}
+		DELETE FROM fileinfo
+		WHERE boardId = #{boardId}
 	</delete>
 
 </mapper>

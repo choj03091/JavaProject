@@ -1,83 +1,109 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>게시판 상세보기</title>
-    <link rel="stylesheet" th:href="@{/css/layout.css}" />
-    <style>
-        .btn-inline {
-            display: inline-block;
-            margin-right: 10px; /* 버튼 간의 간격 */
-        }
-    </style>
+<meta charset="UTF-8">
+<title>게시판 상세보기</title>
+<link rel="stylesheet" th:href="@{/css/layout.css}" />
+<style>
+.btn-inline {
+	display: inline-block;
+	margin-right: 10px;
+}
+</style>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="container mt-5">
-            <h2 class="mb-4">게시판 상세보기</h2>
-            <form action="/board/boardUpdate" method="post" onsubmit="return updateEX()" th:object="${updateBoardCommand}">
-                <input type="hidden" name="boardId" th:value="${dto.boardId}" />
-                <table class="table">
-                    <tr>
-                        <th>작성자[ID]</th>
-                        <td th:text="${dto.memberUsername}"></td>
-                    </tr>
-                    <tr>
-                        <th>회원 이름</th>
-                        <td th:text="${dto.memberName}">회원 이름</td>
-                    </tr>
-                    <tr>
-                        <th>제목</th>
-                        <td>
-                            <span th:text="${dto.title}" th:if="${session.mdto == null or session.mdto.memberId != dto.memberId}"></span>
-                            <input type="text" th:field="*{title}" class="form-control" th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}" th:value="${dto.title}" />
-                            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="errorField"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>파일</th>
-                        <td>
-                            <th:block th:if="${dto.fileBoardDto == null or #lists.isEmpty(dto.fileBoardDto)}">첨부파일없음</th:block>
-                            <th:block th:unless="${dto.fileBoardDto == null or #lists.isEmpty(dto.fileBoardDto)}">
-                                <th:block th:each="fdto : ${dto.fileBoardDto}">
-                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                    <a th:text="${fdto.origin_filename}" th:href="@{/board/download(fileId=${fdto.fileId})}"></a>&nbsp;&nbsp;
-                                    <img th:if="${fdto.stored_filename != null and (fdto.stored_filename.endsWith('.png') or fdto.stored_filename.endsWith('.jpg') or fdto.stored_filename.endsWith('.jpeg'))}" th:src="@{/upload/{filename}(filename=${fdto.stored_filename})}" alt="Uploaded Image" style="width: 100px; height: auto;" />
-                                </th:block>
-                            </th:block>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td>
-                            <span th:text="${dto.content}" th:if="${session.mdto == null or session.mdto.memberId != dto.memberId}"></span>
-                            <textarea rows="10" cols="10" th:field="*{content}" class="form-control" th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">${dto.content}</textarea>
-                            <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="errorField"></span>
-                        </td>
-                    </tr>
-                </table>
-                
-                <!-- 버튼 영역 (수정, 목록, 삭제 버튼) -->
-                <div>
-                    <!-- 수정 버튼 (작성자만 접근 가능) -->
-                    <div th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}" class="btn-inline">
-                        <button type="submit" class="btn btn-primary">수정</button>
-                    </div>
+	<div layout:fragment="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">게시판 상세보기</h2>
+
+			<!-- Board Detail Section -->
+			<form action="/board/boardUpdate" method="post"
+				onsubmit="return updateEX()" th:object="${updateBoardCommand}">
+				<input type="hidden" name="boardId" th:value="${dto.boardId}" />
+				<table class="table">
+					<tr>
+						<th>작성자[ID]</th>
+						<td th:text="${dto.memberUsername}"></td>
+					</tr>
+					<tr>
+						<th>회원 이름</th>
+						<td th:text="${dto.memberName}">회원 이름</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><span th:text="${dto.title}"
+							th:if="${session.mdto == null or session.mdto.memberId != dto.memberId}"></span>
+							<input type="text" th:field="*{title}" class="form-control"
+							th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}"
+							th:value="${dto.title}" /> <span
+							th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+							class="errorField"></span></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><span th:text="${dto.content}"
+							th:if="${session.mdto == null or session.mdto.memberId != dto.memberId}"></span>
+							<textarea rows="10" cols="10" th:field="*{content}"
+								class="form-control"
+								th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">${dto.content}</textarea>
+							<span th:if="${#fields.hasErrors('content')}"
+							th:errors="*{content}" class="errorField"></span></td>
+					</tr>
+				</table>
+			</form>
+
+			<h3>첨부된 이미지</h3>
+				<div class="col-12 col-md-4 mb-3"
+					th:each="file : ${dto.fileBoardDto}">
+					<div class="card">
+						<!-- 썸네일 크기 설정 -->
+						<img
+							th:src="@{/upload/{filename}(filename=${file.origin_filename})}"
+							alt="Uploaded Image" class="img-thumbnail"
+							style="width: 150px; height: auto; object-fit: cover;" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Dog Detail Section -->
+			<h3 class="mt-5">반려견 목록</h3>
+			<table class="table">
+				<tr>
+					<th>반려견 이름</th>
+					<th>품종</th>
+					<th>나이</th>
+					<th>몸무게 (kg)</th>
+					<th>성별</th>
+					<th>약물 복용 여부</th>
+					<th>혈액형</th>
+					<th>등록일</th>
+				</tr>
+				<tr th:each="dog : ${dogList}">
+					<td th:text="${dog.dogName}">반려견 이름</td>
+					<td th:text="${dog.dogBreed}">품종</td>
+					<td th:text="${dog.dogAge}">나이</td>
+					<td th:text="${dog.dogWeight}">몸무게</td>
+					<td th:text="${dog.dogGender}">성별</td>
+					<td th:text="${dog.dogDrug}">약물 복용 여부</td>
+					<td th:text="${dog.dogBlood}">혈액형</td>
+					<td th:text="${#dates.format(dog.regDate, 'yyyy-MM-dd')}">등록일</td>
+				</tr>
+			</table>
+			                <!-- 수정 버튼 (작성자만 접근 가능) -->
+                <div th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
+                    <button type="submit" class="btn btn-primary">수정</button>
                 </div>
             </form>
-            
-            <!-- 목록 버튼과 삭제 버튼을 같은 줄에 배치 -->
-            <a th:href="@{/board/boardList}" class="btn btn-secondary btn-inline">목록</a>
-            
-            <!-- 삭제 버튼 (session.mdto가 null이 아니고 memberId가 일치할 때만 표시) -->
-            <form action="/board/boardDelete" method="post" th:object="${deleteBoardCommand}" style="display: inline;" th:if="${session.mdto != null and session.mdto.memberId == dto.memberId}">
+            <!-- 목록 버튼 (모든 사용자에게 표시) -->
+            <a th:href="@{/board/boardList}" class="btn btn-secondary">목록</a>
+            <!-- 삭제 버튼 (모든 사용자에게 표시) -->
+            <form action="/board/boardDelete" method="post" th:object="${deleteBoardCommand}" style="display: inline;" th:if="${session.mdto != null}">
                 <input type="hidden" name="boardId" th:value="${dto.boardId}" />
                 <button type="submit" class="btn btn-danger btn-inline" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</button>
             </form>
-            
-        </div>
-    </div>
+		</div>
+	</div>
 </body>
-</html>  
+</html>

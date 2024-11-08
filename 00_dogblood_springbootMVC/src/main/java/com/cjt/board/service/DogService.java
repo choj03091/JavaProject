@@ -62,6 +62,10 @@ public class DogService {
     		dogMapper.deleteByDogId(dogId);
     	}
     }
+    
+    public DogDto getDogByMemberId(int memberId) {
+        return dogMapper.getDogByMemberId(memberId);
+    }
    
 
 }

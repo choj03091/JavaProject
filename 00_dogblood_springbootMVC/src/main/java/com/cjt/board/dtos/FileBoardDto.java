@@ -5,11 +5,11 @@ import org.apache.ibatis.type.Alias;
 @Alias(value = "fileBoardDto")
 public class FileBoardDto {
 
-	private int fileId;
-	private int boardId;
-	private String origin_filename;
-	private String stored_filename;
-	
+    private int fileId;
+    private int boardId;
+    private String origin_filename;
+    private String stored_filename; // 필드명이 정확한지 확인
+    
 	public FileBoardDto() {
 		super();
 	}

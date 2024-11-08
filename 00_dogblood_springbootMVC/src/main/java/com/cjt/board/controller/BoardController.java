@@ -19,7 +19,10 @@ import com.cjt.board.command.DelOneBoardCommand;
 import com.cjt.board.command.InsertBoardCommand;
 import com.cjt.board.command.UpdateBoardCommand;
 import com.cjt.board.dtos.BoardDto;
+import com.cjt.board.dtos.DogDto;
 import com.cjt.board.service.BoardService;
+import com.cjt.board.service.DogService;
+
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +33,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+    
+    @Autowired
+    private DogService dogService;
 
     // 게시물 목록 조회
     @GetMapping("/boardList")
@@ -66,8 +72,13 @@ public class BoardController {
 
     @GetMapping("/boardDetail")
     public String boardDetail(@RequestParam("boardId") int boardId, Model model) {
+        // 게시물 정보 조회
         BoardDto dto = boardService.getBoard(boardId);
         model.addAttribute("dto", dto);
+
+        // 작성자의 반려견 목록 조회
+        List<DogDto> dogList = dogService.getDogsByMemberId(dto.getMemberId());
+        model.addAttribute("dogList", dogList);
 
         // UpdateBoardCommand 객체 추가
         UpdateBoardCommand updateBoardCommand = new UpdateBoardCommand();
@@ -75,6 +86,8 @@ public class BoardController {
         updateBoardCommand.setTitle(dto.getTitle());
         updateBoardCommand.setContent(dto.getContent());
         model.addAttribute("updateBoardCommand", updateBoardCommand);
+        System.out.println("fileBoardDto: " + dto.getFileBoardDto());
+
 
         return "board/boardDetail";
     }
